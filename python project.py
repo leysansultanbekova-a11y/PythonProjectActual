@@ -20,7 +20,7 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 PURPLE = (128, 0, 128)
 
-font = pygame.font.SysFont("Arial", 48)
+font = pygame.font.SysFont("Arial", 36)
 
 words = [
     ["aid", "responder", "lady", "nation"],
@@ -40,9 +40,15 @@ while True:
     screen.fill(WHITE)
 
     for row in range(ROWS + 1):
-        pygame.draw.line(screen, BLACK, (0, row * CELL_SIZE), (WIDTH, row * CELL_SIZE), 2)
+        for col in range(COLS + 1):
+            rectangle = pygame.Rect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+            pygame.draw.rect(screen, BLACK, rectangle, 2)
 
-    for col in range(COLS + 1):
-        pygame.draw.line(screen, BLACK, (col * CELL_SIZE, 0), (col * CELL_SIZE, HEIGHT), 2)
+            text_surface = font.render(words[row-1][col-1], True, BLACK)
+
+            text_rectangle = text_surface.get_rect( 
+            center = (col * CELL_SIZE + CELL_SIZE // 2, row * CELL_SIZE + CELL_SIZE // 2)
+            )
+            screen.blit(text_surface, text_rectangle)
 
     pygame.display.flip()
