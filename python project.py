@@ -22,6 +22,12 @@ PURPLE = (128, 0, 128)
 
 font = pygame.font.SysFont("Arial", 48)
 
+words = [
+    ["aid", "responder", "lady", "nation"],
+    ["staring", "beauty", "popularity", "talent"],
+    ["Dre", "Oz", "Pepper", "Seuss"],
+    ["Wars", "Luxe", "Brat", "Cope"]
+]
 
 while True:
     for event in pygame.event.get():
