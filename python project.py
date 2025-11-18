@@ -20,7 +20,7 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 PURPLE = (128, 0, 128)
 
-font = pygame.font.SysFont("Arial", 36)
+font = pygame.font.SysFont("NY Times", 36)
 
 words = [
     ["aid", "responder", "lady", "nation"],
