@@ -6,26 +6,36 @@ pygame.init()
 
 ROWS = 4
 COLS = 4
-CELL_SIZE = 100
+CELL_SIZE = 200
 WIDTH = COLS * CELL_SIZE
 HEIGHT = ROWS * CELL_SIZE
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("4x4 Grid Example")
+pygame.display.set_caption("Connecting 4x4")
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-YELLOW =
-GREEN = 
-BLUE = 
-PURPLE = 
+YELLOW = (255, 255, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+PURPLE = (128, 0, 128)
 
+font = pygame.font.SysFont("Arial", 48)
+
+categories = [
+    ["aid", "responder", "nation", "lady"]
+    ["popularity", "beauty", "staring", "contest"]
+    ["Dre", "Oz", "Pepper", "Seuss"]
+    ["Cope", "Wars", "Luxe", "Brat" ]
+]
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+
+    text = "hello", 
 
     screen.fill(WHITE)
 
