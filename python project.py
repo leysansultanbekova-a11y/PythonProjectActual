@@ -22,12 +22,6 @@ PURPLE = (128, 0, 128)
 
 font = pygame.font.SysFont("Arial", 48)
 
-categories = [
-    ["aid", "responder", "nation", "lady"]
-    ["popularity", "beauty", "staring", "contest"]
-    ["Dre", "Oz", "Pepper", "Seuss"]
-    ["Cope", "Wars", "Luxe", "Brat" ]
-]
 
 while True:
     for event in pygame.event.get():
