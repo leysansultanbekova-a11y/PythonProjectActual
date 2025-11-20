@@ -1,4 +1,3 @@
-
 import pygame
 import sys
 
@@ -19,6 +18,12 @@ YELLOW = (255, 255, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 PURPLE = (128, 0, 128)
+GRAY = (128, 128, 128)
+
+selected = []
+for r in range(ROWS):
+    selected.append([False] * COLS)
+
 
 font = pygame.font.SysFont("NY Times", 36)
 
@@ -35,12 +40,17 @@ while True:
             pygame.quit()
             sys.exit()
 
-    text = "hello", 
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            x, y = event.pos
+            col = x // CELL_SIZE
+            row = y // CELL_SIZE
+            selected[row][col] = not selected[row][col]
+            
 
     screen.fill(WHITE)
 
-    for row in range(ROWS + 1):
-        for col in range(COLS + 1):
+    for row in range(ROWS):
+        for col in range(COLS):
             rectangle = pygame.Rect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
             pygame.draw.rect(screen, BLACK, rectangle, 2)
 
@@ -51,4 +61,11 @@ while True:
             )
             screen.blit(text_surface, text_rectangle)
 
+            if selected[row][col]:
+                highlight = pygame.Surface((CELL_SIZE, CELL_SIZE), pygame.SRCALPHA)
+                highlight.fill((128, 128, 128, 120))  # RGBA — last value is transparency (0–255)
+                screen.blit(highlight, (col * CELL_SIZE, row * CELL_SIZE))
+
+
     pygame.display.flip()
+
