@@ -24,14 +24,13 @@ selected = []
 for r in range(ROWS):
     selected.append([False] * COLS)
 
-
 font = pygame.font.SysFont("NY Times", 36)
 
 words = [
-    ["aid", "responder", "lady", "nation"],
-    ["staring", "beauty", "popularity", "talent"],
-    ["Dre", "Oz", "Pepper", "Seuss"],
-    ["Wars", "Luxe", "Brat", "Cope"]
+    ["Dre", "Talent", "Brat", "Beauty"],
+    ["Oz", "Nation", "Aid", "Luxe"],
+    ["Responder", "Cope", "Staring", "Seuss"],
+    ["Pepper", "Lady", "Wars", "Popularity"]
 ]
 
 while True:
@@ -54,7 +53,7 @@ while True:
             rectangle = pygame.Rect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
             pygame.draw.rect(screen, BLACK, rectangle, 2)
 
-            text_surface = font.render(words[row-1][col-1], True, BLACK)
+            text_surface = font.render(words[row][col], True, BLACK)
 
             text_rectangle = text_surface.get_rect( 
             center = (col * CELL_SIZE + CELL_SIZE // 2, row * CELL_SIZE + CELL_SIZE // 2)
@@ -69,3 +68,7 @@ while True:
 
     pygame.display.flip()
 
+#thoughts for further code:
+#put a cap of choosing 4 so that player can only select 4 boxes
+#do if/else functions that check if the selected boxes are correct/incorrect depending on the categories
+#shuffle words so that theyre not in the caategorized rows
