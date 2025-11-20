@@ -33,6 +33,13 @@ words = [
     ["Pepper", "Lady", "Wars", "Popularity"]
 ]
 
+first = ["Aid", "Responder", "Nation", "Lady"]
+contests = ["Staring", "Beauty", "Popularity", "Talent"]
+doctors = ["Oz", "Pepper", "Dre", "Seuss"]
+first_four = ["Brat", "Luxe", "Wars", "Cope"]
+
+categories = [first, contests, doctors, first_four]
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -40,10 +47,13 @@ while True:
             sys.exit()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-            x, y = event.pos
-            col = x // CELL_SIZE
-            row = y // CELL_SIZE
-            selected[row][col] = not selected[row][col]
+                x, y = event.pos
+                col = x // CELL_SIZE
+                row = y // CELL_SIZE
+                total_selected = sum(sum(row) for row in selected)
+                if not selected[row][col] and total_selected >= 4:
+                     continue
+                selected[row][col] = not selected[row][col]
             
 
     screen.fill(WHITE)
@@ -60,15 +70,17 @@ while True:
             )
             screen.blit(text_surface, text_rectangle)
 
-            if selected[row][col]:
+            if selected[row][col]: 
                 highlight = pygame.Surface((CELL_SIZE, CELL_SIZE), pygame.SRCALPHA)
-                highlight.fill((128, 128, 128, 120))  # RGBA — last value is transparency (0–255)
+                highlight.fill((128, 128, 128, 120))  
                 screen.blit(highlight, (col * CELL_SIZE, row * CELL_SIZE))
+
+
+         
 
 
     pygame.display.flip()
 
 #thoughts for further code:
-#put a cap of choosing 4 so that player can only select 4 boxes
 #do if/else functions that check if the selected boxes are correct/incorrect depending on the categories
-#shuffle words so that theyre not in the caategorized rows
+#after correct selection, change the selected boxes into different colors depending on difficulty of the category
