@@ -14,15 +14,22 @@ pygame.display.set_caption("Connecting 4x4")
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-YELLOW = (255, 255, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
-PURPLE = (128, 0, 128)
 GRAY = (128, 128, 128)
 
+CATEGORY_COLORS = {
+    "first": (255, 200, 200),     
+    "contests": (255, 255, 180), 
+    "doctors": (200, 255, 200),   
+    "first_four": (200, 220, 255)  
+}
+
 selected = []
-for r in range(ROWS):
+for row in range(ROWS):
     selected.append([False] * COLS)
+
+locked_colors = []
+for row in range(ROWS):
+    locked_colors.append([None] * COLS)
 
 font = pygame.font.SysFont("NY Times", 36)
 
@@ -33,12 +40,13 @@ words = [
     ["Pepper", "Lady", "Wars", "Popularity"]
 ]
 
-first = ["Aid", "Responder", "Nation", "Lady"]
-contests = ["Staring", "Beauty", "Popularity", "Talent"]
-doctors = ["Oz", "Pepper", "Dre", "Seuss"]
-first_four = ["Brat", "Luxe", "Wars", "Cope"]
+categories = {
+    "first": ["Aid", "Responder", "Nation", "Lady"],
+    "contests": ["Staring", "Beauty", "Popularity", "Talent"],
+    "doctors": ["Oz", "Pepper", "Dre", "Seuss"],
+    "first_four": ["Brat", "Luxe", "Wars", "Cope"]
+}
 
-categories = [first, contests, doctors, first_four]
 
 while True:
     for event in pygame.event.get():
@@ -52,8 +60,29 @@ while True:
                 row = y // CELL_SIZE
                 total_selected = sum(sum(row) for row in selected)
                 if not selected[row][col] and total_selected >= 4:
-                     continue
+                    continue
                 selected[row][col] = not selected[row][col]
+
+                total_selected = sum(sum(row) for row in selected)
+                if total_selected == 4: 
+                    selected_words = []
+                    selected_position = []
+                    for row in range(ROWS):
+                        for col in range(COLS):
+                            if selected[row][col]:
+                                selected_words.append(words[row][col])
+                                selected_position.append((row, col))
+                    
+                    matched_category = None
+                    for name, group in categories.items(): 
+                        if all(word in group for word in selected_words):
+                            matched_category = name
+                            break
+                    if matched_category:
+                        color = CATEGORY_COLORS[matched_category]
+                        for (row, col) in selected_position:
+                            locked_colors[row][col] = color
+
             
 
     screen.fill(WHITE)
@@ -74,9 +103,6 @@ while True:
                 highlight = pygame.Surface((CELL_SIZE, CELL_SIZE), pygame.SRCALPHA)
                 highlight.fill((128, 128, 128, 120))  
                 screen.blit(highlight, (col * CELL_SIZE, row * CELL_SIZE))
-
-
-         
 
 
     pygame.display.flip()
