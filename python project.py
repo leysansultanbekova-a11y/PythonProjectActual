@@ -17,19 +17,11 @@ BLACK = (0, 0, 0)
 GRAY = (128, 128, 128)
 
 CATEGORY_COLORS = {
-    "first": (255, 200, 200),     
-    "contests": (255, 255, 180), 
-    "doctors": (200, 255, 200),   
-    "first_four": (200, 220, 255)  
+    "first": (255, 255, 200),     
+    "contests": (144, 244, 144), 
+    "doctors": (135, 206, 235),   
+    "first_four": (203, 195, 227)  
 }
-
-selected = []
-for row in range(ROWS):
-    selected.append([False] * COLS)
-
-locked_colors = []
-for row in range(ROWS):
-    locked_colors.append([None] * COLS)
 
 font = pygame.font.SysFont("NY Times", 36)
 
@@ -47,6 +39,13 @@ categories = {
     "first_four": ["Brat", "Luxe", "Wars", "Cope"]
 }
 
+selected = []
+for row in range(ROWS):
+    selected.append([False] * COLS)
+
+locked_colors = []
+for row in range(ROWS):
+    locked_colors.append([None] * COLS)
 
 while True:
     for event in pygame.event.get():
@@ -83,6 +82,9 @@ while True:
                         for (row, col) in selected_position:
                             locked_colors[row][col] = color
 
+                    for row in range(ROWS):
+                        for col in range(COLS):
+                            selected[row][col] = False
             
 
     screen.fill(WHITE)
@@ -92,6 +94,11 @@ while True:
             rectangle = pygame.Rect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
             pygame.draw.rect(screen, BLACK, rectangle, 2)
 
+            if locked_colors[row][col] is not None: 
+                pygame.draw.rect(screen, locked_colors[row][col], rectangle)
+            elif selected[row][col]:
+                pygame.draw.rect(screen, GRAY, rectangle)
+            
             text_surface = font.render(words[row][col], True, BLACK)
 
             text_rectangle = text_surface.get_rect( 
@@ -108,5 +115,5 @@ while True:
     pygame.display.flip()
 
 #thoughts for further code:
-#do if/else functions that check if the selected boxes are correct/incorrect depending on the categories
-#after correct selection, change the selected boxes into different colors depending on difficulty of the category
+#make it so that user is not able to select a box if its already correct and the cateogory was defined
+#move the correctly selected boxes to the top of the screen in rows
