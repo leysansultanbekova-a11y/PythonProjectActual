@@ -57,6 +57,10 @@ while True:
                 x, y = event.pos
                 col = x // CELL_SIZE
                 row = y // CELL_SIZE
+
+                if locked_colors[row][col] is not None:
+                    continue
+
                 total_selected = sum(sum(row) for row in selected)
                 if not selected[row][col] and total_selected >= 4:
                     continue
@@ -115,5 +119,4 @@ while True:
     pygame.display.flip()
 
 #thoughts for further code:
-#make it so that user is not able to select a box if its already correct and the cateogory was defined
 #move the correctly selected boxes to the top of the screen in rows
