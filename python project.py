@@ -15,7 +15,6 @@ pygame.display.set_caption("Connecting 4x4")
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY = (128, 128, 128)
-
 CATEGORY_COLORS = {
     "first": (255, 255, 200),     
     "contests": (144, 244, 144), 
@@ -62,8 +61,10 @@ while True:
                     continue
 
                 total_selected = sum(sum(row) for row in selected)
+
                 if not selected[row][col] and total_selected >= 4:
                     continue
+
                 selected[row][col] = not selected[row][col]
 
                 total_selected = sum(sum(row) for row in selected)
@@ -77,9 +78,9 @@ while True:
                                 selected_position.append((row, col))
                     
                     matched_category = None
-                    for name, group in categories.items(): 
-                        if all(word in group for word in selected_words):
-                            matched_category = name
+                    for category, words in categories.items(): 
+                        if all(word in words for word in selected_words):
+                            matched_category = category
                             break
                     if matched_category:
                         color = CATEGORY_COLORS[matched_category]
@@ -95,7 +96,9 @@ while True:
 
     for row in range(ROWS):
         for col in range(COLS):
-            rectangle = pygame.Rect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+            x = col * CELL_SIZE
+            y = row * CELL_SIZE
+            rectangle = pygame.Rect(x, y, CELL_SIZE, CELL_SIZE)
             pygame.draw.rect(screen, BLACK, rectangle, 2)
 
             if locked_colors[row][col] is not None: 
@@ -104,10 +107,7 @@ while True:
                 pygame.draw.rect(screen, GRAY, rectangle)
             
             text_surface = font.render(words[row][col], True, BLACK)
-
-            text_rectangle = text_surface.get_rect( 
-            center = (col * CELL_SIZE + CELL_SIZE // 2, row * CELL_SIZE + CELL_SIZE // 2)
-            )
+            text_rectangle = text_surface.get_rect(center = (x + CELL_SIZE//2, y + CELL_SIZE//2))
             screen.blit(text_surface, text_rectangle)
 
             if selected[row][col]: 
@@ -120,3 +120,4 @@ while True:
 
 #thoughts for further code:
 #move the correctly selected boxes to the top of the screen in rows
+#go back to original state if boxes are incorrectly selected
