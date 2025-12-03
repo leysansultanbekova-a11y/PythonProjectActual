@@ -78,14 +78,16 @@ while True:
                                 selected_position.append((row, col))
                     
                     matched_category = None
-                    for category, words in categories.items(): 
-                        if all(word in words for word in selected_words):
+                    for category, group in categories.items(): 
+                        if all(word in group for word in selected_words):
                             matched_category = category
                             break
                     if matched_category:
                         color = CATEGORY_COLORS[matched_category]
                         for (row, col) in selected_position:
                             locked_colors[row][col] = color
+                    else: 
+                        pass
 
                     for row in range(ROWS):
                         for col in range(COLS):
