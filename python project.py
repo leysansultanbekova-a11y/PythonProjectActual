@@ -76,7 +76,6 @@ while True:
 
                 total_selected = sum(sum(row) for row in selected)
                 if total_selected == 4: 
-                    attempts += 1
                     selected_words = []
                     selected_position = []
                     for row in range(ROWS):
@@ -95,7 +94,7 @@ while True:
                         for (row, col) in selected_position:
                             locked_colors[row][col] = color
                     else: 
-                        pass
+                        attempts += 1
 
                     for row in range(ROWS):
                         for col in range(COLS):
@@ -136,6 +135,3 @@ while True:
 
     pygame.display.flip()
 
-#thoughts for further code:
-#move the correctly selected boxes to the top of the screen in rows
-#go back to original state if boxes are incorrectly selected
